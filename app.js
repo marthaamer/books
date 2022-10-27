@@ -18,3 +18,9 @@ function addBook(e) {
     e.preventDefault()
 }
 
+function deleteBook(id) {
+    if (confirm('Are you sure you want to delete this item?')) {
+        document.getElementById(id).parentElement.remove()
+    }
+}
+
