@@ -10,7 +10,7 @@ function addBook(e) {
     tr.innerHTML = `<td>${title}</td>
             <td>${author}</td>
             <td>${isbn}</td>
-            <td class="text-center" style="cursor: pointer" id="${isbn}" onclick="deleteBook(this.id)">X</td>`
+            <td class="text-center" style="cursor: pointer" id="${isbn} onclick="deleteBook(this.id)">X</td>`
 
     let el = document.getElementById('tableBody');
     el.appendChild(tr)
@@ -20,12 +20,34 @@ function addBook(e) {
     e.preventDefault()
 }
 
-localStorage.clear();
 function deleteBook(id) {
     if (confirm('Are you sure you want to delete this item?')) {
         document.getElementById(id).parentElement.remove()
+        deleteBookFromLocalStorage(id)
     }
 }
+
+function getBooksFromLocalStorage() {
+    let books
+    if (localStorage.getItem('books') === null) {
+        books = []
+    } else {
+        books = JSON.parse(localStorage.getItem('books'))
+    }
+
+    books.forEach((book) => {
+        let tr = document.createElement('tr')
+        tr.innerHTML = `<td>${book[0]}</td>
+            <td>${book[1]}</td>
+            <td>${book[2]}</td>
+            <td class="text-center" style="cursor: pointer" id="${book[2]}" onclick="deleteBook(this.id)">X</td>`
+
+        let el = document.getElementById('tableBody');
+        el.appendChild(tr)
+    })
+}
+
+getBooksFromLocalStorage()
 
 function addBookToLocalStorage(title, author, isbn) {
     let books
@@ -38,8 +60,7 @@ function addBookToLocalStorage(title, author, isbn) {
     let book = [title, author, isbn]
 
     books.push(book)
-    localStorage.setItem('books', JSON.stringify(books))
 
-    console.log(localStorage)
+    localStorage.setItem('books', JSON.stringify(books))
 }
 
