@@ -38,6 +38,12 @@ function deleteBookFromLocalStorage(id) {
     localStorage.setItem('books', JSON.stringify(books))
 }
 
+function clearAllBooksFromLocalStorage() {
+    localStorage.setItem('books', JSON.stringify([]))
+    const tbody = document.getElementById('tableBody')
+    tbody.innerHTML = ``
+}
+
 function getBooksFromLocalStorage() {
     let books
     if (localStorage.getItem('books') === null) {
