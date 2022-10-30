@@ -27,6 +27,17 @@ function deleteBook(id) {
     }
 }
 
+function deleteBookFromLocalStorage(id) {
+    let books = JSON.parse(localStorage.getItem('books'))
+    books.forEach((book, index) => {
+        if (id == book[2]) {
+            books.splice(index, 1)
+        }
+    })
+
+    localStorage.setItem('books', JSON.stringify(books))
+}
+
 function getBooksFromLocalStorage() {
     let books
     if (localStorage.getItem('books') === null) {
